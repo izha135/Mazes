@@ -1,6 +1,7 @@
 ## Project 4 - Mazes
 
-#### Names
+#### Isha Chauhan & John Cooper
+
 
 #### John's Ideas
 
@@ -11,4 +12,3 @@ Have the board be concrete?
 Make the solving and generating algorithms abstract classes (maybe interfaces)?
 
 How do we want to split work?
-
