@@ -44,12 +44,41 @@ public class Maze {
 
     public void removeWallSouthOf(int row, int col) {
         getTile(row,col).setSouthWall(false);
-
     }
 
     public void removeWallWestOf(int row, int col) {
         getTile(row,col).setWestWall(false);
-
     }
 
+    public void addWallNorthOf(int row, int col){
+        getTile(row,col).setNorthWall(true);
+    }
+
+    public void addWallEastOf(int row, int col){
+        getTile(row,col).setEastWall(true);
+    }
+
+    public void addWallWestOf(int row, int col){
+        getTile(row,col).setWestWall(true);
+    }
+
+    public void addWallSouthOf(int row, int col){
+        getTile(row,col).setSouthWall(true);
+    }
+
+    public void setStartTile(){
+        this.startTile = startTile;
+    }
+
+    public void setEndTile(){
+        this.endTile = endTile;
+    }
+
+    public MazeTile getStartTile() {
+        return startTile;
+    }
+
+    public MazeTile getEndTile() {
+        return endTile;
+    }
 }
