@@ -15,8 +15,12 @@ public class Maze {
      */
     public Maze(int width, boolean fillWalls) {
         maze = new ArrayList<>();
+        ArrayList list = new ArrayList();
         for(int i = 0; i < width; i++) {
-
+            for(int j = 0; j < width; j++) {
+                MazeTile tile = new MazeTile();
+                list.add(tile);
+            }
         }
     }
 
@@ -24,19 +28,27 @@ public class Maze {
 
     // Add wall methods, like the remove wall ones
 
-    public void removeWallNorthOf(int row, int col) {
+    public MazeTile getTile(int row,int col){
+        List<MazeTile> rowTile = maze.get(row);
+        MazeTile colTile = rowTile.get(col);
+        return colTile;
+    }
 
+    public void removeWallNorthOf(int row, int col) {
+        getTile(row,col).setNorthWall(false);
     }
 
     public void removeWallEastOf(int row, int col) {
-
+        getTile(row,col).setEastWall(false);
     }
 
     public void removeWallSouthOf(int row, int col) {
+        getTile(row,col).setSouthWall(false);
 
     }
 
     public void removeWallWestOf(int row, int col) {
+        getTile(row,col).setWestWall(false);
 
     }
 
