@@ -1,6 +1,8 @@
-## Project 4 - Mazes
+## Project 4 - Mazes 
 
 ##### Isha Chauhan & John Cooper
+
+##### (Version 1 - Generators)
 
 _Note_: There are important notes at the end of the README. 
 
@@ -219,3 +221,16 @@ list of animations that show the relevant actions the solver did.
 We decided it would be a good idea to start by doing some work individually
 with a few methods that we decided would be useful. After this, we started
 doing pair-programming for the solvers and generators.
+
+#### .jar file
+
+The jar file takes on argument: the filename with the specification for the
+parameters (as per the project spec). This is assumed to be in the same
+directory as the .jar file.
+
+#### The Start and End Tile
+
+In our maze, there is no way to break a wall on the edge of the maze. However,
+it is equivalent to state that there are two tiles within the board on the edges
+labeled as the start and end tile. The start tile is labeled black and the end
+tile is labeled red.

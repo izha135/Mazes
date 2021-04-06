@@ -20,10 +20,9 @@ import javafx.stage.Stage;
 import maze.Maze;
 import maze.MazeTile;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.*;
 
 public class MazeController extends Application {
     // The list of animations to animate
@@ -49,10 +48,17 @@ public class MazeController extends Application {
 
         // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
+        //setFileValues("");
+        //setFileValues(args[0]);
 
         // Create the objects for generation and soling
         maze = new Maze(mazeCellWidth, true);
         MazeGenerator gen = GeneratorFactory.getGenerator(generator);
+        if(gen == null) {
+            System.out.println("That generator is not supported");
+            // Stop executing
+            return;
+        }
 
         // Generate and solve the maze, saving all of the animations
         animationList.addAll(gen.generate(maze));
@@ -73,6 +79,28 @@ public class MazeController extends Application {
         mazeCellWidth = screenWidth / cellWidth - 1;
 
         generator = GeneratorEnum.KRUSTAL;
+        // solver = ??
+    }
+
+    private static void setFileValues(String fileName) {
+        Scanner fileScan = null;
+        try {
+            fileScan = new Scanner (
+                    new BufferedReader(
+                            new FileReader(fileName)));
+            //                new FileReader("resources/params.txt")));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        screenHeight = fileScan.nextInt();
+        screenWidth = screenHeight;
+        cellWidth = fileScan.nextInt();
+        mazeCellWidth = screenWidth / cellWidth - 1;
+
+        generator = GeneratorEnum.getEnum(fileScan.next());
+        // solver = ??
     }
 
     /**
