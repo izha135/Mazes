@@ -234,3 +234,16 @@ In our maze, there is no way to break a wall on the edge of the maze. However,
 it is equivalent to state that there are two tiles within the board on the edges
 labeled as the start and end tile. The start tile is labeled black and the end
 tile is labeled red.
+
+---
+
+### Known Bugs List
+
+___
+
+### To-Do List
+
+1) Make Kruskal's algorithm not have the double for loop (store more info in the index)
+2) Everything with the solvers
+3) Making the display look good
+4) Include ND stuff???
