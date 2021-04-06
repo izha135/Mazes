@@ -13,7 +13,6 @@ import generators.GeneratorFactory;
 import generators.MazeGenerator;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.collections.transformation.TransformationList;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -27,54 +26,63 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MazeController extends Application {
-    static List<Animation> animationList;
-    static int screenWidth;
-    static int screenHeight;
-    static int cellWidth;
-    static int mazeCellWidth;
-    static Maze maze;
-    static GeneratorEnum generator;
+    // The list of animations to animate
+    private static List<Animation> animationList;
+    // The width of the screen (pixels)
+    private static int screenWidth;
+    // The height of the screen (pixels)
+    private static int screenHeight;
+    // The width of each cell (pixels)
+    private static int cellWidth;
+    // The width of the maze (number of cells)
+    private static int mazeCellWidth;
+    // The maze object to generate on and solve
+    private static Maze maze;
+    // The generator that decides which generator to use
+    private static GeneratorEnum generator;
 
-    static final double scale = 0.1;
+    // The speed multiplier of the animations
+    static final double SCALE = 0.1;
 
     public static void main(String[] args) {
         animationList = new LinkedList<>();
 
+        // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
 
-        // THIS IS TEMPORARY vvv
-
-        /*for (int i = 0; i < mazeCellWidth-1; i++) {
-            animationList.add(new TileAnimation(i, (i*17)%39, Color.AQUA));
-            for (int j = 0; j < mazeCellWidth; j++) {
-                animationList.add(new EdgeAnimation(i, j, true, Color.TRANSPARENT));
-                animationList.add(new EdgeAnimation(j, i, false, Color.TRANSPARENT));
-            }
-        }*/
-
-        // THIS IS TEMPORARY ^^^
-
+        // Create the objects for generation and soling
         maze = new Maze(mazeCellWidth, true);
-
         MazeGenerator gen = GeneratorFactory.getGenerator(generator);
 
+        // Generate and solve the maze, saving all of the animations
         animationList.addAll(gen.generate(maze));
         animationList.add(new AllAnimation(Color.WHITE));
         animationList.addAll(setStartEnd(maze));
+        animationList.add(new WaitAnimation(10));
 
         launch(args);
     }
 
-    public static void setDefaultValues() {
+    /**
+     * Sets the parameters of the maze, solver, and generator to default values
+     */
+    private static void setDefaultValues() {
         screenHeight = 400;
         screenWidth = screenHeight;
         cellWidth = 10;
         mazeCellWidth = screenWidth / cellWidth - 1;
 
-        generator = GeneratorEnum.PRIM;
+        generator = GeneratorEnum.KRUSTAL;
     }
 
-    public static List<Animation> setStartEnd(Maze maze) {
+    /**
+     * Sets the start tile and end tile of the maze.
+     * Black - The start
+     * Red - The end
+     * @param maze The maze to set the start and end tile of
+     * @return The animations to set the colors of the start and end
+     */
+    private static List<Animation> setStartEnd(Maze maze) {
         List<Animation> animList = new ArrayList<>();
         List<MazeTile> tileList = maze.collapseMaze();
         Collections.shuffle(tileList);
@@ -86,7 +94,7 @@ public class MazeController extends Application {
 
         for(MazeTile tile : tileList) {
             if(hasSetStart) {
-                // Finding the end cell
+                // Finding the end cell on the opposite edge of the start cell
                 if(tile.getCol() == 0 && !isNorthSouth && isMaxValue) {
                     maze.setEndTile(tile.getRow(), tile.getCol());
                     animList.add(new TileAnimation(tile.getRow(), tile.getCol(), Color.RED));
@@ -145,8 +153,10 @@ public class MazeController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // Initialize the pane
         Pane root = new Pane();
 
+        // Initialize the graphical maze
         GraphicMaze graphicMaze = new GraphicMaze(root, mazeCellWidth, cellWidth);
 
         Scene scene = new Scene(root, screenWidth, screenHeight, true);
@@ -161,15 +171,18 @@ public class MazeController extends Application {
 
             @Override
             public void handle(long now) {
+                // Set the start of the animation
                 if (lastEventTime == -1) lastEventTime = now;
 
-                if (!animationList.isEmpty()) animTime = 1_000_000_000l * scale * animationList.get(0).getAnimateTime();
+                // Play the animations
+                if (!animationList.isEmpty()) animTime = 1_000_000_000l * SCALE * animationList.get(0).getAnimateTime();
+                // Play all animations that needed to be run in the past frame
                 while (!animationList.isEmpty() && now > animTime + lastEventTime) {
                     animationList.get(0).animate(graphicMaze);
                     animationList.remove(0);
                     lastEventTime += animTime;
                     if(!animationList.isEmpty()) {
-                        animTime = 1_000_000_000l * scale * animationList.get(0).getAnimateTime();
+                        animTime = 1_000_000_000l * SCALE * animationList.get(0).getAnimateTime();
                     }
                 }
             }

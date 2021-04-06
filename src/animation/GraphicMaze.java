@@ -22,6 +22,7 @@ public class GraphicMaze {
     private final int DISPLAY_OFFSET = 5;
     // The internal representation of the maze
     private List<List<GraphicTile>> graphicMaze;
+    // The width (number of cells) in the maze
     private int mazeWidth;
 
     /**
@@ -44,6 +45,9 @@ public class GraphicMaze {
         }
     }
 
+    /**
+     * @return The width (number of cells) in the maze
+     */
     public int getWidth() {
         return mazeWidth;
     }
@@ -106,42 +110,49 @@ public class GraphicMaze {
             group = new Group(northWall, eastWall, southWall, westWall, square);
         }
 
+        /**
+         * @return The group of the cell square and the edges
+         */
         public Group getGroup() {
             return group;
         }
 
-        public Line getEastWall() {
-            return eastWall;
-        }
-
-        public Line getSouthWall() {
-            return southWall;
-        }
-
-        public Line getNorthWall() {
-            return northWall;
-        }
-
-        public Line getWestWall() {
-            return westWall;
-        }
-
+        /**
+         * Sets the color of the cell
+         * @param color The specified color
+         */
         public void setColor(Color color) {
             square.setFill(color);
         }
 
+        /**
+         * Set the north wall at a specified color
+         * @param color The specified color
+         */
         public void setNorthColor(Color color) {
             northWall.setStroke(color);
         }
 
+        /**
+         * Set the east wall at a specified color
+         * @param color The specified color
+         */
         public void setEastColor(Color color) {
             eastWall.setStroke(color);
         }
 
+        /**
+         * Set the south wall at a specified color
+         * @param color The specified color
+         */
         public void setSouthColor(Color color) {
             southWall.setStroke(color);
         }
 
+        /**
+         * Set the west wall at a specified color
+         * @param color The specified color
+         */
         public void setWestColor(Color color) {
             westWall.setStroke(color);
         }

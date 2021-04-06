@@ -27,19 +27,16 @@ public class Maze {
      */
     public Maze(int width, boolean fillWalls) {
         this.width = width;
+
         maze = new ArrayList<>();
         for(int i = 0; i < width; i++) {
             maze.add(new ArrayList<>());
             for(int j = 0; j < width; j++) {
                 MazeTile tile = new MazeTile(i, j, width);
                 maze.get(i).add(tile);
-                if(fillWalls) {
-                    tile.setNorthWall(true);
-                    tile.setEastWall(true);
-                    tile.setSouthWall(true);
-                    tile.setWestWall(true);
-                }
-                else {
+                // All walls are usually set to be present. If not filling
+                // the walls, set all to false
+                if(!fillWalls) {
                     tile.setNorthWall(false);
                     tile.setEastWall(false);
                     tile.setSouthWall(false);
@@ -49,6 +46,9 @@ public class Maze {
         }
     }
 
+    /**
+     * @return Width (number of tiles) of the maze
+     */
     public int getWidth() {
         return width;
     }
@@ -64,6 +64,10 @@ public class Maze {
         return colTile;
     }
 
+    /**
+     * Give a 1-dimensional list of all of the tiles in the maze
+     * @return The list of all tiles in the maze
+     */
     public List<MazeTile> collapseMaze() {
         List<MazeTile> retList = new ArrayList<>();
         for (int i = 0; i < width; i++) {
@@ -74,9 +78,14 @@ public class Maze {
         return retList;
     }
 
+    /**
+     * Give the total list of all edges in the maze
+     * @return The edges in the maze
+     */
     public List<MazeEdge> getEdges() {
         List<MazeEdge> edgeList = new ArrayList<>();
 
+        // Add all of the vertical walls
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < width-1; j++) {
                 if(getTile(i, j).hasEastWall()) {
@@ -85,6 +94,7 @@ public class Maze {
             }
         }
 
+        // Add all of the horizontal walls
         for (int i = 0; i < width-1; i++) {
             for (int j = 0; j < width; j++) {
                 if(getTile(i, j).hasSouthWall()) {
@@ -96,27 +106,38 @@ public class Maze {
         return edgeList;
     }
 
+    /**
+     * Removes a wall from the specified tile in the specified directions.
+     * This removes the wall from both sides
+     * @param row The row of the tile
+     * @param col The column of the tile
+     * @param dir The direction of the wall to remove
+     */
     public void removeWall(int row, int col, MazeDirection dir) {
         switch(dir) {
             case NORTH:
+                // Don't remove edges to the north if on the top edge
                 if(col != 0){
                     removeWallNorthOf(row, col);
                     removeWallSouthOf(row, col-1);
                 }
                 break;
             case EAST:
+                // Don't remove edges to to the east if on the right edge
                 if(row != width-1) {
                     removeWallEastOf(row, col);
                     removeWallWestOf(row+1, col);
                 }
                 break;
             case SOUTH:
+                // Don't remove edges to the south if on the bottom edge
                 if(col != width-1) {
                     removeWallSouthOf(row, col);
                     removeWallNorthOf(row, col+1);
                 }
                 break;
             case WEST:
+                // Don't remove edges to the west if on the left edge
                 if(row != 0) {
                     removeWallWestOf(row, col);
                     removeWallEastOf(row-1, col);
@@ -127,27 +148,38 @@ public class Maze {
         }
     }
 
+    /**
+     * Adds a wall on the specified tile in the specified direction.
+     * Also adds the wall on the other side of the edge.
+     * @param row The row of the tile
+     * @param col The column of the tile
+     * @param dir The direction to add the wall in
+     */
     public void addWall(int row, int col, MazeDirection dir) {
         switch (dir) {
             case NORTH:
+                // Don't change the north wall if the wall is on the top edge
                 if(col != 0) {
                     addWallNorthOf(row, col);
                     addWallSouthOf(row, col-1);
                 }
                 break;
             case EAST:
+                // Don't change the east wall if the wall is on the right edge
                 if(row != width-1) {
                     addWallEastOf(row, col);
                     addWallWestOf(row+1, col);
                 }
                 break;
             case SOUTH:
+                // Don't change the south wall if the wall is on the bottom edge
                 if(col != width-1) {
                     addWallSouthOf(row, col);
                     addWallNorthOf(row, col+1);
                 }
                 break;
             case WEST:
+                // Don't change to the west wall if the wall is on the left edge
                 if(row != 0) {
                     addWallWestOf(row, col);
                     addWallEastOf(row-1, col);

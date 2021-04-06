@@ -1,3 +1,10 @@
+/**
+ * CS351 Project 4 - Mazes
+ * Authors : John Cooper && Isha Chauhan
+ *
+ * The base interface of a maze generator
+ */
+
 package generators;
 
 import animation.Animation;
