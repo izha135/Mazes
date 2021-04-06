@@ -22,6 +22,7 @@ public class GraphicMaze {
     private final int DISPLAY_OFFSET = 5;
     // The internal representation of the maze
     private List<List<GraphicTile>> graphicMaze;
+    private int mazeWidth;
 
     /**
      * Creates a GraphicalMaze object with cells and edges, then
@@ -31,6 +32,7 @@ public class GraphicMaze {
      * @param cellWidth The pixel width of the cells
      */
     public GraphicMaze(Pane root, int mazeWidth, int cellWidth) {
+        this.mazeWidth = mazeWidth;
         graphicMaze = new ArrayList<>();
 
         for (int i = 0; i < mazeWidth; i++) {
@@ -40,6 +42,10 @@ public class GraphicMaze {
                 root.getChildren().add(graphicMaze.get(i).get(j).getGroup());
             }
         }
+    }
+
+    public int getWidth() {
+        return mazeWidth;
     }
 
     /**

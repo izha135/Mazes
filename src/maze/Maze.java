@@ -26,14 +26,31 @@ public class Maze {
      * @param fillWalls If all of the walls in the board should be filled
      */
     public Maze(int width, boolean fillWalls) {
+        this.width = width;
         maze = new ArrayList<>();
-        ArrayList list = new ArrayList();
         for(int i = 0; i < width; i++) {
+            maze.add(new ArrayList<>());
             for(int j = 0; j < width; j++) {
-                MazeTile tile = new MazeTile();
-                list.add(tile);
+                MazeTile tile = new MazeTile(i, j, width);
+                maze.get(i).add(tile);
+                if(fillWalls) {
+                    tile.setNorthWall(true);
+                    tile.setEastWall(true);
+                    tile.setSouthWall(true);
+                    tile.setWestWall(true);
+                }
+                else {
+                    tile.setNorthWall(false);
+                    tile.setEastWall(false);
+                    tile.setSouthWall(false);
+                    tile.setWestWall(false);
+                }
             }
         }
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     /**
@@ -45,6 +62,100 @@ public class Maze {
         List<MazeTile> rowTile = maze.get(row);
         MazeTile colTile = rowTile.get(col);
         return colTile;
+    }
+
+    public List<MazeTile> collapseMaze() {
+        List<MazeTile> retList = new ArrayList<>();
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width; j++) {
+                retList.add(getTile(i, j));
+            }
+        }
+        return retList;
+    }
+
+    public List<MazeEdge> getEdges() {
+        List<MazeEdge> edgeList = new ArrayList<>();
+
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < width-1; j++) {
+                if(getTile(i, j).hasEastWall()) {
+                    edgeList.add(new MazeEdge(i, j, false));
+                }
+            }
+        }
+
+        for (int i = 0; i < width-1; i++) {
+            for (int j = 0; j < width; j++) {
+                if(getTile(i, j).hasSouthWall()) {
+                    edgeList.add(new MazeEdge(i, j, true));
+                }
+            }
+        }
+
+        return edgeList;
+    }
+
+    public void removeWall(int row, int col, MazeDirection dir) {
+        switch(dir) {
+            case NORTH:
+                if(col != 0){
+                    removeWallNorthOf(row, col);
+                    removeWallSouthOf(row, col-1);
+                }
+                break;
+            case EAST:
+                if(row != width-1) {
+                    removeWallEastOf(row, col);
+                    removeWallWestOf(row+1, col);
+                }
+                break;
+            case SOUTH:
+                if(col != width-1) {
+                    removeWallSouthOf(row, col);
+                    removeWallNorthOf(row, col+1);
+                }
+                break;
+            case WEST:
+                if(row != 0) {
+                    removeWallWestOf(row, col);
+                    removeWallEastOf(row-1, col);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void addWall(int row, int col, MazeDirection dir) {
+        switch (dir) {
+            case NORTH:
+                if(col != 0) {
+                    addWallNorthOf(row, col);
+                    addWallSouthOf(row, col-1);
+                }
+                break;
+            case EAST:
+                if(row != width-1) {
+                    addWallEastOf(row, col);
+                    addWallWestOf(row+1, col);
+                }
+                break;
+            case SOUTH:
+                if(col != width-1) {
+                    addWallSouthOf(row, col);
+                    addWallNorthOf(row, col+1);
+                }
+                break;
+            case WEST:
+                if(row != 0) {
+                    addWallWestOf(row, col);
+                    addWallEastOf(row-1, col);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -122,15 +233,15 @@ public class Maze {
     /**
      * Sets the start tile
      */
-    public void setStartTile(){
-        this.startTile = startTile;
+    public void setStartTile(int row, int col){
+        this.startTile = getTile(row, col);
     }
 
     /**
      * Sets the end tile
      */
-    public void setEndTile(){
-        this.endTile = endTile;
+    public void setEndTile(int row, int col){
+        this.endTile = getTile(row, col);
     }
 
     /**

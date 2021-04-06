@@ -7,6 +7,9 @@
 
 package maze;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MazeTile {
     // true if the wall to the north of the tile is present
     private boolean northWall;
@@ -18,16 +21,29 @@ public class MazeTile {
     private boolean eastWall;
     // A useful index/value in creating
     private int index;
+    private int row, col;
+    private int width;
 
     /**
      * Creates a maze tile
      */
-    public MazeTile() {
+    public MazeTile(int row, int col, int width) {
+        this.width = width;
+        this.row = row;
+        this.col = col;
         northWall = true;
         eastWall = true;
         southWall = true;
         westWall = true;
         index = 0;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
     }
 
     /**
@@ -102,5 +118,16 @@ public class MazeTile {
      */
     public void setWestWall(boolean westWall) {
         this.westWall = westWall;
+    }
+
+    public List<MazeEdge> getWalls() {
+        List<MazeEdge> retList = new ArrayList<>();
+
+        if (hasNorthWall() && row != 0) retList.add(new MazeEdge(row-1, col, true));
+        if (hasSouthWall() && row != width-1) retList.add(new MazeEdge(row, col, true));
+        if (hasWestWall() && col != 0) retList.add(new MazeEdge(row, col-1, false));
+        if (hasEastWall() && col != width-1) retList.add(new MazeEdge(row, col, false));
+
+        return retList;
     }
 }
