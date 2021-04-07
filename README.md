@@ -235,6 +235,13 @@ it is equivalent to state that there are two tiles within the board on the edges
 labeled as the start and end tile. The start tile is labeled black and the end
 tile is labeled red.
 
+#### Efficiency
+
+* When using Kruskal's algorithm for larger mazes, (width of more than around
+50 tiles on a side) it will take a number
+of seconds to generate the maze since we did not try to make that method 
+as efficient as possible.
+
 ---
 
 ### Known Bugs List

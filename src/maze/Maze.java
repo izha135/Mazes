@@ -106,6 +106,21 @@ public class Maze {
         return edgeList;
     }
 
+    public MazeTile getTile(int row, int col, MazeDirection dir) {
+        switch(dir) {
+            case NORTH:
+                return getTile(row-1, col);
+            case EAST:
+                return getTile(row, col+1);
+            case SOUTH:
+                return getTile(row+1, col);
+            case WEST:
+                return getTile(row, col-1);
+            default:
+                return null;
+        }
+    }
+
     /**
      * Removes a wall from the specified tile in the specified directions.
      * This removes the wall from both sides
@@ -117,30 +132,30 @@ public class Maze {
         switch(dir) {
             case NORTH:
                 // Don't remove edges to the north if on the top edge
-                if(col != 0){
+                if(row != 0){
                     removeWallNorthOf(row, col);
-                    removeWallSouthOf(row, col-1);
+                    removeWallSouthOf(row-1, col);
                 }
                 break;
             case EAST:
                 // Don't remove edges to to the east if on the right edge
-                if(row != width-1) {
+                if(col != width-1) {
                     removeWallEastOf(row, col);
-                    removeWallWestOf(row+1, col);
+                    removeWallWestOf(row, col+1);
                 }
                 break;
             case SOUTH:
                 // Don't remove edges to the south if on the bottom edge
-                if(col != width-1) {
+                if(row != width-1) {
                     removeWallSouthOf(row, col);
-                    removeWallNorthOf(row, col+1);
+                    removeWallNorthOf(row+1, col);
                 }
                 break;
             case WEST:
                 // Don't remove edges to the west if on the left edge
-                if(row != 0) {
+                if(col != 0) {
                     removeWallWestOf(row, col);
-                    removeWallEastOf(row-1, col);
+                    removeWallEastOf(row, col-1);
                 }
                 break;
             default:

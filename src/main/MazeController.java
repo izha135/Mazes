@@ -18,7 +18,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import maze.Maze;
+import maze.MazeEdge;
 import maze.MazeTile;
+import solvers.MazeSolver;
+import solvers.SolverEnum;
+import solvers.SolverFactory;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,6 +43,8 @@ public class MazeController extends Application {
     private static Maze maze;
     // The generator that decides which generator to use
     private static GeneratorEnum generator;
+    // The value which decides which solver to use
+    private static SolverEnum solver;
 
     // The speed multiplier of the animations
     static final double SCALE = 0.1;
@@ -59,12 +65,19 @@ public class MazeController extends Application {
             // Stop executing
             return;
         }
+        MazeSolver solve = SolverFactory.getSolver(solver);
+        if(solve == null) {
+            System.out.println("That solver is not supported");
+            // Stop executing
+            return;
+        }
 
         // Generate and solve the maze, saving all of the animations
         animationList.addAll(gen.generate(maze));
         animationList.add(new AllAnimation(Color.WHITE));
         animationList.addAll(setStartEnd(maze));
         animationList.add(new WaitAnimation(10));
+        animationList.addAll(solve.solve(maze));
 
         launch(args);
     }
@@ -75,11 +88,11 @@ public class MazeController extends Application {
     private static void setDefaultValues() {
         screenHeight = 400;
         screenWidth = screenHeight;
-        cellWidth = 10;
-        mazeCellWidth = screenWidth / cellWidth - 1;
+        cellWidth = 20;
+        mazeCellWidth = screenWidth / cellWidth;
 
         generator = GeneratorEnum.KRUSTAL;
-        // solver = ??
+        solver = SolverEnum.ASTAR;
     }
 
     private static void setFileValues(String fileName) {
@@ -94,7 +107,7 @@ public class MazeController extends Application {
             e.printStackTrace();
         }
 
-        screenHeight = fileScan.nextInt();
+        screenHeight = fileScan.nextInt() + 10;
         screenWidth = screenHeight;
         cellWidth = fileScan.nextInt();
         mazeCellWidth = screenWidth / cellWidth - 1;
@@ -187,7 +200,7 @@ public class MazeController extends Application {
         // Initialize the graphical maze
         GraphicMaze graphicMaze = new GraphicMaze(root, mazeCellWidth, cellWidth);
 
-        Scene scene = new Scene(root, screenWidth, screenHeight, true);
+        Scene scene = new Scene(root, screenWidth+10, screenHeight+10, true);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Maze Animation");
 
