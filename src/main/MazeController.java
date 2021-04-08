@@ -18,7 +18,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import maze.Maze;
-import maze.MazeEdge;
 import maze.MazeTile;
 import solvers.MazeSolver;
 import solvers.SolverEnum;
@@ -54,7 +53,6 @@ public class MazeController extends Application {
 
         // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
-        //setFileValues("");
         //setFileValues(args[0]);
 
         // Create the objects for generation and soling
@@ -95,6 +93,10 @@ public class MazeController extends Application {
         solver = SolverEnum.ASTAR;
     }
 
+    /**
+     * Set the parameters of the maze, solver, and generator based on values in the file
+     * @param fileName The file name with the parameters
+     */
     private static void setFileValues(String fileName) {
         Scanner fileScan = null;
         try {

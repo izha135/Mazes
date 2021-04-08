@@ -106,19 +106,39 @@ public class Maze {
         return edgeList;
     }
 
+    /**
+     * Return the tile in the given direction from the specified coordinates
+     * @param row The row of the relevant tile
+     * @param col The column of the relevant tile
+     * @param dir The direction to get the next tile
+     * @return The tile in the specified direction. Null if no tile exists there
+     */
     public MazeTile getTile(int row, int col, MazeDirection dir) {
         switch(dir) {
             case NORTH:
-                return getTile(row-1, col);
+                if (row != 0) {
+                    return getTile(row-1, col);
+                }
+                break;
             case EAST:
-                return getTile(row, col+1);
+                if(col != width-1) {
+                    return getTile(row, col+1);
+                }
+                break;
             case SOUTH:
-                return getTile(row+1, col);
+                if(row != width-1) {
+                    return getTile(row+1, col);
+                }
+                break;
             case WEST:
-                return getTile(row, col-1);
+                if(col != 0) {
+                    return getTile(row, col-1);
+                }
+                break;
             default:
                 return null;
         }
+        return null;
     }
 
     /**

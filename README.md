@@ -2,7 +2,7 @@
 
 ##### Isha Chauhan & John Cooper
 
-##### (Version 1 - Generators)
+##### (Version 2 - Generators & Solvers)
 
 _Note_: There are important notes at the end of the README. 
 
@@ -137,7 +137,7 @@ properly. The only function to implement is ```generate()```. This
 also will return a list of animations that show all the relevant 
 actions done by the generator.
 
-### PrimGenerator
+#### PrimGenerator
 
 Takes a maze with all the walls present and removes the
 walls following the rules of Prim's algorithm
@@ -200,17 +200,56 @@ the edge of the maze.
 
 ### Solvers
 
-_Implemented Solvers: None_
+_Implemented Solvers: A*, Random Mouse, Pledge, Wall Following_
 
 These solvers take a generated mazes with a set start and end tile and
 find the solution. This solution is not saved, but is represented on
-the ```GraphicMaze``` after the animations are all executed.
+the ```GraphicMaze``` after the animations are all executed. All
+path solutions are labelled in pink.
+
+#### AStarSolver
+
+This solver uses the A* solving algorithm. This is described in the
+link below. In our specific implementation, we use the Manhattan
+distance between a cell and the end as our h function.
+
+Reference: https://en.wikipedia.org/wiki/A*_search_algorithm
 
 #### MazeSolver
 
 This is the general interface for a solver. Has one method to be 
 implemented: ```solve()```. This takes a ```Maze``` and returns a
 list of animations that show the relevant actions the solver did.
+
+#### MouseSolver
+
+Solves the maze using a random mouse moving around the maze,
+allowing for backtracking. This algorithm is very inefficient.
+This randomly chooses a neighbour cell and travels to it until
+the end it reached.
+
+#### PledgeSolver
+
+This solving algorithm acts almost identically to the wall-following
+solver. The only difference is that, when the solver has rotated
+the same amount left as right, the algorithm prefers going forward 
+over following a specified wall.
+
+#### SolverEnum
+
+An enumeration of all the possible solvers. Useful in passing
+values to the ```SolverFactory``` to generate a specific solver.
+Also allows for an enum to be returned based on a passed string.
+
+#### SolverFactory
+
+A factory that returns a solver (or null) based on a passed
+```SolverEnum```
+
+#### WallSolver
+
+Solves the maze by following a specific wall (left or right) of
+the maze. 
 
 ---
 
@@ -232,8 +271,8 @@ directory as the .jar file.
 
 In our maze, there is no way to break a wall on the edge of the maze. However,
 it is equivalent to state that there are two tiles within the board on the edges
-labeled as the start and end tile. The start tile is labeled black and the end
-tile is labeled red.
+labeled as the start and end tile. The start tile is labeled __black__ 
+and the end tile is labeled __red__.
 
 #### Efficiency
 
@@ -241,16 +280,24 @@ tile is labeled red.
 50 tiles on a side) it will take a number
 of seconds to generate the maze since we did not try to make that method 
 as efficient as possible.
+  
+#### MouseSolver Speed
+
+The MouseSolver has such sporadic movements that solving can take
+a very long time for larger board. Do not expect the solver to find
+solutions to larger boards in any reasonable amount of time.
 
 ---
 
 ### Known Bugs List
+
+none
 
 ___
 
 ### To-Do List
 
 1) Make Kruskal's algorithm not have the double for loop (store more info in the index)
-2) Everything with the solvers
-3) Making the display look good
-4) Include ND stuff???
+2) Making the display look good
+3) Include ND stuff???
+4) Implement multithreading algorithms

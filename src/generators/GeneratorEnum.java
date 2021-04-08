@@ -10,6 +10,11 @@ package generators;
 public enum GeneratorEnum {
     DFS, KRUSTAL, PRIM, ALDOUS, RECDIV;
 
+    /**
+     * Return the enum of the same name as the string passed
+     * @param str The string to find the enum for
+     * @return The enum
+     */
     public static GeneratorEnum getEnum(String str) {
         if (str.charAt(0) == 'a') return ALDOUS;
         if (str.charAt(0) == 'd') return DFS;
