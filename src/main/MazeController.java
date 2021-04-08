@@ -113,7 +113,7 @@ public class MazeController extends Application {
         mazeCellWidth = screenWidth / cellWidth - 1;
 
         generator = GeneratorEnum.getEnum(fileScan.next());
-        // solver = ??
+        solver = SolverEnum.getEnum(fileScan.next());
     }
 
     /**
