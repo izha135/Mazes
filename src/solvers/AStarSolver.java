@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class AStarSolver implements MazeSolver{
     /**
-     * Create a solver that will solver the maze using A*
+     * Create a solver that will solve the maze using A*
      */
     public AStarSolver() {
 
@@ -84,7 +84,9 @@ public class AStarSolver implements MazeSolver{
                     // Add it to the open set if the neighbor is not in the open set
                     if(!openSet.contains(neighbor)) {
                         openSet.add(neighbor);
-                        animList.add(new TileAnimation(neighbor.getRow(), neighbor.getCol(), getColor(neighbor, maze)));
+                        if(neighbor != startTile && neighbor != endTile) {
+                            animList.add(new TileAnimation(neighbor.getRow(), neighbor.getCol(), getColor(neighbor, maze)));
+                        }
                     }
                 }
             }
@@ -112,7 +114,9 @@ public class AStarSolver implements MazeSolver{
         while(true) {
             currentTile = cameFrom.get(currentTile);
             if(currentTile == startTile) break;
-            animList.add(new TileAnimation(currentTile.getRow(), currentTile.getCol(), Color.PINK));
+            if (currentTile != endTile) {
+                animList.add(new TileAnimation(currentTile.getRow(), currentTile.getCol(), Color.PINK));
+            }
         }
 
         return animList;
@@ -128,17 +132,21 @@ public class AStarSolver implements MazeSolver{
         int d = 2*maze.getWidth();
         double h = h(tile, maze);
         // h/d normalizes the values to be in [0, 1]
-        return new Color(h/d, h/d, h/d, 1.0);
+        //return new Color((h/d), (h/d), (h/d), 1.0); // L1
+
+        //return new Color(h/(d*d), h/(d*d), h/(d*d), 1.0);
+        return new Color((h/(d*d)), (h/(d*d)), 1.0, 1.0);
     }
 
     /**
-     * The h score of a given tile (currently the L1 distance to the end)
+     * The h score of a given tile (currently the L1 distance squared to the end)
      * @param tile The relevant tile
      * @param maze The maze being solved
      * @return The h score of the tile
      */
     public double h(MazeTile tile, Maze maze) {
         MazeTile endTile = maze.getEndTile();
-        return Math.abs(tile.getCol()- endTile.getCol())+Math.abs(tile.getRow()- endTile.getRow());
+        double L1 = Math.abs(tile.getCol()- endTile.getCol())+Math.abs(tile.getRow()- endTile.getRow());
+        return L1*L1;
     }
 }

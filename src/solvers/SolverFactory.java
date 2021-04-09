@@ -30,7 +30,7 @@ public class SolverFactory {
             case WALLTHREAD:
                 return null;
             case MOUSETHREAD:
-                return null;
+                return new MouseThreadSolver();
             default:
                 return null;
         }

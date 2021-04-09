@@ -7,6 +7,7 @@
 
 package maze;
 
+import java.awt.image.DirectColorModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -167,6 +168,18 @@ public class MazeTile {
         if (!hasSouthWall()) retList.add(maze.getTile(row + 1, col));
         if (!hasWestWall()) retList.add(maze.getTile(row, col - 1));
         if (!hasEastWall()) retList.add(maze.getTile(row, col + 1));
+
+        return retList;
+    }
+
+    public List<MazeDirection> getOpenDirections(Maze maze) {
+        List<MazeDirection> retList = new ArrayList<>();
+
+        // Add cells if there aren't walls between the cells
+        if (!hasNorthWall()) retList.add(MazeDirection.NORTH);
+        if (!hasSouthWall()) retList.add(MazeDirection.SOUTH);
+        if (!hasWestWall()) retList.add(MazeDirection.WEST);
+        if (!hasEastWall()) retList.add(MazeDirection.EAST);
 
         return retList;
     }

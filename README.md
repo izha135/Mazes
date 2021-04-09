@@ -211,7 +211,7 @@ path solutions are labelled in pink.
 
 This solver uses the A* solving algorithm. This is described in the
 link below. In our specific implementation, we use the Manhattan
-distance between a cell and the end as our h function.
+distance squared between a cell and the end as our h function.
 
 Reference: https://en.wikipedia.org/wiki/A*_search_algorithm
 
@@ -229,6 +229,8 @@ This randomly chooses a neighbour cell and travels to it until
 the end it reached.
 
 #### PledgeSolver
+
+Preferential direction is _always_ north
 
 This solving algorithm acts almost identically to the wall-following
 solver. The only difference is that, when the solver has rotated

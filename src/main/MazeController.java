@@ -46,14 +46,18 @@ public class MazeController extends Application {
     private static SolverEnum solver;
 
     // The speed multiplier of the animations
-    static final double SCALE = 0.1;
+    static double scale = 0.1;
 
     public static void main(String[] args) {
         animationList = new LinkedList<>();
 
         // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
-        //setFileValues(args[0]);
+        /*if(args.length == 0) {
+            System.out.println("Please include the filename as argument 0");
+            return;
+        }
+        setFileValues(args[0]);*/
 
         // Create the objects for generation and soling
         maze = new Maze(mazeCellWidth, true);
@@ -84,13 +88,14 @@ public class MazeController extends Application {
      * Sets the parameters of the maze, solver, and generator to default values
      */
     private static void setDefaultValues() {
-        screenHeight = 400;
+        screenHeight = 700;
         screenWidth = screenHeight;
-        cellWidth = 20;
+        cellWidth = 4;
         mazeCellWidth = screenWidth / cellWidth;
 
         generator = GeneratorEnum.KRUSTAL;
         solver = SolverEnum.ASTAR;
+        scale = 3.0 / mazeCellWidth;
     }
 
     /**
@@ -116,6 +121,8 @@ public class MazeController extends Application {
 
         generator = GeneratorEnum.getEnum(fileScan.next());
         solver = SolverEnum.getEnum(fileScan.next());
+
+        scale = 3.0 / mazeCellWidth;
     }
 
     /**
@@ -218,14 +225,14 @@ public class MazeController extends Application {
                 if (lastEventTime == -1) lastEventTime = now;
 
                 // Play the animations
-                if (!animationList.isEmpty()) animTime = 1_000_000_000l * SCALE * animationList.get(0).getAnimateTime();
+                if (!animationList.isEmpty()) animTime = 1_000_000_000l * scale * animationList.get(0).getAnimateTime();
                 // Play all animations that needed to be run in the past frame
                 while (!animationList.isEmpty() && now > animTime + lastEventTime) {
                     animationList.get(0).animate(graphicMaze);
                     animationList.remove(0);
                     lastEventTime += animTime;
                     if(!animationList.isEmpty()) {
-                        animTime = 1_000_000_000l * SCALE * animationList.get(0).getAnimateTime();
+                        animTime = 1_000_000_000l * scale * animationList.get(0).getAnimateTime();
                     }
                 }
             }
