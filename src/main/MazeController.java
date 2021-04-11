@@ -46,18 +46,18 @@ public class MazeController extends Application {
     private static SolverEnum solver;
 
     // The speed multiplier of the animations
-    static double scale = 0.1;
+    static double scale;
 
     public static void main(String[] args) {
         animationList = new LinkedList<>();
 
         // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
-        /*if(args.length == 0) {
+        if(args.length == 0) {
             System.out.println("Please include the filename as argument 0");
             return;
         }
-        setFileValues(args[0]);*/
+        setFileValues(args[0]);
 
         // Create the objects for generation and soling
         maze = new Maze(mazeCellWidth, true);
@@ -75,11 +75,15 @@ public class MazeController extends Application {
         }
 
         // Generate and solve the maze, saving all of the animations
+        System.out.println("Generating maze...");
+        if(generator == GeneratorEnum.KRUSTAL) System.out.println("Warning: Kruskal takes a while");
         animationList.addAll(gen.generate(maze));
         animationList.add(new AllAnimation(Color.WHITE));
         animationList.addAll(setStartEnd(maze));
-        animationList.add(new WaitAnimation(10));
+        animationList.add(new WaitAnimation(mazeCellWidth*mazeCellWidth/150.0));
+        System.out.println("Solving maze...");
         animationList.addAll(solve.solve(maze));
+        System.out.println("Finished");
 
         launch(args);
     }
@@ -88,14 +92,14 @@ public class MazeController extends Application {
      * Sets the parameters of the maze, solver, and generator to default values
      */
     private static void setDefaultValues() {
-        screenHeight = 700;
+        screenHeight = 600;
         screenWidth = screenHeight;
-        cellWidth = 4;
+        cellWidth = 10;
         mazeCellWidth = screenWidth / cellWidth;
 
         generator = GeneratorEnum.KRUSTAL;
-        solver = SolverEnum.ASTAR;
-        scale = 3.0 / mazeCellWidth;
+        solver = SolverEnum.WALLTHREAD;
+        scale = 150.0 / (mazeCellWidth * mazeCellWidth);
     }
 
     /**
@@ -122,7 +126,7 @@ public class MazeController extends Application {
         generator = GeneratorEnum.getEnum(fileScan.next());
         solver = SolverEnum.getEnum(fileScan.next());
 
-        scale = 3.0 / mazeCellWidth;
+        scale = 100.0 / (mazeCellWidth * mazeCellWidth);
     }
 
     /**

@@ -172,6 +172,11 @@ public class MazeTile {
         return retList;
     }
 
+    /**
+     * Provides a list of directions that are traversable
+     * @param maze The maze to find the traversable directions in
+     * @return The list of directions
+     */
     public List<MazeDirection> getOpenDirections(Maze maze) {
         List<MazeDirection> retList = new ArrayList<>();
 

@@ -28,7 +28,7 @@ public class SolverFactory {
             case WALL:
                 return new WallSolver();
             case WALLTHREAD:
-                return null;
+                return new WallThreadSolver();
             case MOUSETHREAD:
                 return new MouseThreadSolver();
             default:

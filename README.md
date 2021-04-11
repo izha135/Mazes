@@ -228,6 +228,17 @@ allowing for backtracking. This algorithm is very inefficient.
 This randomly chooses a neighbour cell and travels to it until
 the end it reached.
 
+#### MouseTread
+
+A class that has the threads that are used to solve the maze with.
+Spawns new threads at every junction. Keeps a record of the 
+traversals similarly to A*.
+
+#### MouseThreadController
+
+Controls the mouse-threads. Acts as an interface between the
+mouse-threads and the animation system.
+
 #### PledgeSolver
 
 Preferential direction is _always_ north
@@ -252,6 +263,21 @@ A factory that returns a solver (or null) based on a passed
 
 Solves the maze by following a specific wall (left or right) of
 the maze. 
+
+#### WallThread
+
+A thread that is used within the wall-following multi-threaded
+solution. Allows for the thread to be started at different tiles,
+(specifically the start and end tile of the maze). Solves the maze
+exactly like standard wall following but stops once it meets
+the path made by the other thread
+
+#### WallThreadSolver
+
+Solves the maze using the wall-following, multi-threaded
+technique. Spawns two WallThreads at opposite ends of the maze
+and controls the overall process of them running and gathering t
+the animations.
 
 ---
 
@@ -300,6 +326,4 @@ ___
 ### To-Do List
 
 1) Make Kruskal's algorithm not have the double for loop (store more info in the index)
-2) Making the display look good
-3) Include ND stuff???
-4) Implement multithreading algorithms
+2) Making the display look better
