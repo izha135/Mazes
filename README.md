@@ -6,6 +6,9 @@
 
 _Note_: There are important notes at the end of the README. 
 
+Also, the .jar ending in ND is a fun side project that we don't want to be graded
+for comments or style or anything. We just thought it would be fun to include.
+
 ---
 
 ### Overall Structure
@@ -314,6 +317,35 @@ as efficient as possible.
 The MouseSolver has such sporadic movements that solving can take
 a very long time for larger board. Do not expect the solver to find
 solutions to larger boards in any reasonable amount of time.
+
+#### ND Mazes
+
+This is an n-dimensional version of the maze solving algorithms for this project.
+They are non-comprehensive but include a good number of them and also another one,
+```primmod```, which is Prim's algorithm but modified to be stylistically 
+different. The file input should be as follows
+
+dimension  
+screenHeight  
+cellWidth  
+generator  
+solver  
+
+The below is an example
+
+3  
+800  
+60  
+primmod  
+astar  
+
+The dimension of the maze can be 2-6.  
+For dim 2 and screenWidth 800, the suggested minimum for the cellWidth is 4  
+For dim 3 and screenWidth 800, the suggested minimum for the cellWidth is 20  
+For dim 4 and screenWidth 800, the suggested minimum for the cellWidth is 42  
+For dim 5 and screenWidth 800, the suggested minimum for the cellWidth is 60  
+For dim 6 and screenWidth 800, the suggested minimum for the cellWidth is 80  
+Anything smaller will be very difficult and very slow to generate/solve.
 
 ---
 
