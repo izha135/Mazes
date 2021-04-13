@@ -92,13 +92,13 @@ public class MazeController extends Application {
      * Sets the parameters of the maze, solver, and generator to default values
      */
     private static void setDefaultValues() {
-        screenHeight = 600;
+        screenHeight = 700;
         screenWidth = screenHeight;
         cellWidth = 10;
         mazeCellWidth = screenWidth / cellWidth;
 
         generator = GeneratorEnum.KRUSTAL;
-        solver = SolverEnum.WALLTHREAD;
+        solver = SolverEnum.ASTAR;
         scale = 150.0 / (mazeCellWidth * mazeCellWidth);
     }
 

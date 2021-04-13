@@ -347,6 +347,11 @@ For dim 5 and screenWidth 800, the suggested minimum for the cellWidth is 60
 For dim 6 and screenWidth 800, the suggested minimum for the cellWidth is 80  
 Anything smaller will be very difficult and very slow to generate/solve.
 
+#### ND Mazes Controls
+
+_Left-click_ - Toggles if the walls are visible or not  
+_Right-click_ - Toggles if the outside walls are visible or not
+
 ---
 
 ### Known Bugs List

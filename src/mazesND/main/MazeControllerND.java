@@ -17,12 +17,8 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.ConditionalFeature;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
@@ -77,9 +73,9 @@ public class MazeControllerND extends Application {
     }
 
     public static void setDefaultValues() {
-        dimension = 6;
+        dimension = 3;
         screenHeight = 800;
-        cellWidth = 100;
+        cellWidth = 30;
         // KRUSTAL, ALDOUS, PRIM, PRIMMOD, DFS;
         generator = GeneratorEnumND.KRUSTAL;
         // ASTAR, MOUSE, PLEDGE, ROUTING, TREMAUX, WALL
