@@ -92,13 +92,13 @@ public class MazeController extends Application {
      * Sets the parameters of the maze, solver, and generator to default values
      */
     private static void setDefaultValues() {
-        screenHeight = 700;
+        screenHeight = 500;
         screenWidth = screenHeight;
         cellWidth = 10;
         mazeCellWidth = screenWidth / cellWidth;
 
         generator = GeneratorEnum.KRUSTAL;
-        solver = SolverEnum.ASTAR;
+        solver = SolverEnum.MOUSE;
         scale = 150.0 / (mazeCellWidth * mazeCellWidth);
     }
 
@@ -218,6 +218,11 @@ public class MazeController extends Application {
         primaryStage.setTitle("Maze Animation");
 
         primaryStage.show();
+
+        // Scrolling changes the speed of the animation
+        scene.setOnScroll(event -> {
+            scale *= 1 - 0.06 * (event.getDeltaY() / 32);
+        });
 
         AnimationTimer at = new AnimationTimer() {
             double animTime;

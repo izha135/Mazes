@@ -24,6 +24,12 @@ created, and the animations are executed on this object.
 
 ---
 
+### Controls
+
+_Scroll_ - Changes the pace of the animation
+
+---
+
 ### Main
 #### MazeController
 
@@ -351,6 +357,7 @@ Anything smaller will be very difficult and very slow to generate/solve.
 
 _Left-click_ - Toggles if the walls are visible or not  
 _Right-click_ - Toggles if the outside walls are visible or not
+_Scroll_ - Zooms in and out
 
 ---
 
