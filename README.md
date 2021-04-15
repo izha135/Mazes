@@ -363,7 +363,6 @@ _Scroll_ - Zooms in and out
 
 ### Known Bugs List
 
-none
 
 ___
 
