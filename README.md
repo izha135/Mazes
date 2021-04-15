@@ -2,8 +2,6 @@
 
 ##### Isha Chauhan & John Cooper
 
-##### (Version 2 - Generators & Solvers)
-
 _Note_: There are important notes at the end of the README. 
 
 Also, the .jar ending in ND is a fun side project that we don't want to be graded
