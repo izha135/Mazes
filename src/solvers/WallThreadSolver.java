@@ -47,9 +47,11 @@ public class WallThreadSolver implements MazeSolver{
 
         ExecutorService pool = Executors.newFixedThreadPool(2);
 
-        // Add two threads, starting at the two ends of the maze
-        WallThread.createAndSubmit(pool, animQueue, maze, maze.getStartTile(), maze.getEndTile(), 1);
-        WallThread.createAndSubmit(pool, animQueue, maze, maze.getEndTile(), maze.getStartTile(), 2);
+        // Add two threads, starting at the two ends of the maze and on different walls
+        WallThread.createAndSubmit(pool, animQueue, maze, maze.getStartTile(),
+                maze.getEndTile(), 1, true);
+        WallThread.createAndSubmit(pool, animQueue, maze, maze.getEndTile(),
+                maze.getStartTile(), 2, false);
 
         // Wait until the threads are both done executing
         pool.shutdown();

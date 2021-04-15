@@ -22,7 +22,7 @@ public class WallThread implements Runnable {
     // The last traversed direction
     private MazeDirection direction;
     // If the wall followed should be the left or the right one
-    private boolean isLeftWall = true;
+    private boolean isLeftWall;
     // The maze object to solve
     private Maze maze;
     // The queue of animations to animate
@@ -33,12 +33,13 @@ public class WallThread implements Runnable {
     private int index;
 
     private WallThread(BlockingQueue<Animation> animQueue, Maze maze,
-                       MazeTile start, MazeTile end, int index) {
+                       MazeTile start, MazeTile end, int index, boolean isLeftWall) {
         direction = MazeDirection.NORTH;
         this.animQueue = animQueue;
         this.maze = maze;
         startTile = start;
         endTile = end;
+        this.isLeftWall = isLeftWall;
         this.index = index;
     }
 
@@ -52,8 +53,8 @@ public class WallThread implements Runnable {
      * @param index The index of the thread
      */
     public static void createAndSubmit(ExecutorService pool, BlockingQueue<Animation> animQueue, Maze maze,
-                                       MazeTile start, MazeTile end, int index) {
-        WallThread newThread = new WallThread(animQueue, maze, start, end, index);
+                                       MazeTile start, MazeTile end, int index, boolean isLeftWall) {
+        WallThread newThread = new WallThread(animQueue, maze, start, end, index, isLeftWall);
         pool.submit(newThread);
     }
 
