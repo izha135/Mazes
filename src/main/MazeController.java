@@ -53,11 +53,11 @@ public class MazeController extends Application {
 
         // Set the variables for what generator to use, the width, etc.
         setDefaultValues();
-        /*if(args.length == 0) {
+        if(args.length == 0) {
             System.out.println("Please include the filename as argument 0");
             return;
         }
-        setFileValues(args[0]);*/
+        setFileValues(args[0]);
 
         // Create the objects for generation and soling
         maze = new Maze(mazeCellWidth, true);
